@@ -8,6 +8,8 @@ import Button from './components/Button';
 import CircleButton from "./components/CircleButton";
 import IconButton from "./components/IconButton";
 import EmojiPicker from "./components/EmojiPicker";
+import EmojiList from "./components/EmojiList";
+import EmojiSticker from "./components/EmojiSticker";
 
 
 const PlaceholderImage = require('./assets/images/yeeezy.png');
@@ -17,6 +19,7 @@ export default function App() {
 const [isModalVisible,setIsModalVisible] = useState(false);
 const [showAppOptions, setShowAppOptions] = useState(false);
 const [selectedImage, setSelectedImage] = useState(null);
+const [pickedEmoji,setPickedEmoji] = useState(null);
 
   const onReset = () => {
     setShowAppOptions(false);
@@ -56,8 +59,9 @@ const [selectedImage, setSelectedImage] = useState(null);
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <ImageViewer placeholderImageSource={PlaceholderImage} selectedImage={selectedImage}/>
+        {pickedEmoji !== null? <EmojiSticker imageSize={40} stickerSource={pickedEmoji}/> :null}
          <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
-
+            <EmojiList onSelect={setPickedEmoji} onCloseModal={onModalClose}/>
         </EmojiPicker>
       </View>
 
@@ -70,13 +74,7 @@ const [selectedImage, setSelectedImage] = useState(null);
             <IconButton icon="refresh" label={"Reset"} onPress={onReset} />
             <CircleButton onPress={onAddSticker} />
             <IconButton icon="save-alt" label={"Save"} onPress={onSaveImageAsync} />
-
-
-
           </View>
-
-
-
         </View>
 
 
